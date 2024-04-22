@@ -1,0 +1,19 @@
+/* Animation for entering route */
+.route-enter {
+    opacity: 0;
+}
+
+.route-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+}
+
+/* Animation for leaving route */
+.route-exit {
+    opacity: 1;
+}
+
+.route-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
