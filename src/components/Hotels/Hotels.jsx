@@ -55,12 +55,14 @@ const Hotels = () => {
               >
                 <p className="text-lg">{hotel.name}</p>
                 <p>{hotel.city}</p>
-                <div className="image-container">
+                <div className="hotel-image-container">
                   {imageLoading && (
-                    <div className="animate-spin mx-auto my-4 rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+                    <div className="animate-pulse my-2">
+                      <img className="rounded-md mx-auto h-32 w-52" src="assets/placeholder.png" />
+                    </div>
                   )}{" "}
                   <img
-                    className={`h-20 w-32 object-cover mx-auto ${
+                    className={`h-32 w-52 my-2 object-cover mx-auto rounded-md ${
                       imageLoading ? "hidden" : ""
                     }`}
                     src={`${flaskAPI}/get_image/${hotel.image}`}
@@ -75,7 +77,7 @@ const Hotels = () => {
         </motion.div>
 
         {/* Right panel */}
-        <div className="col2 bg-gray-400">
+        <div className="col2 bg-mycolor">
           {loading ? (
             <div className="flex justify-center items-center h-full">
               {" "}
@@ -95,12 +97,14 @@ const Hotels = () => {
                   <p>Description: {room.description}</p>
                   <p>Max Occupancy: {room.max_occupancy}</p>
                   <p>Price: {room.price}</p>
-                  <div className="image-container">
+                  <div className="hotel-image-container">
                     {roomImageloading && (
-                      <div className="animate-spin my-4 rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+                      <div className="animate-pulse my-2">
+                        <img className="rounded-md h-32 w-52" src="assets/placeholder.png" />
+                      </div>
                     )}{" "}
                     <img
-                      className={`h-20 w-32 object-cover ${
+                      className={`h-32 w-52 my-2 object-cover rounded-md ${
                         roomImageloading ? "hidden" : ""
                       }`}
                       src={`${flaskAPI}/get_image/${room.image}`}

@@ -15,11 +15,11 @@ const FeatureCard = ({ icon, title, description, image }) => {
         <i
           className={`text-xl text-primary-500 border-r border-stone-300 pr-0 mr-0 xl:pr-4 xl:mr-2 ${icon}`}
         ></i>
-        <h3 className="text-xl font-medium">{title}</h3>
+        <h3 className="text-xl font-normal">{title}</h3>
       </div>
       <hr className="bg-slate-400 px-5"></hr>
       <p className="text-gray-700 px-4">{description} </p>
-      <button onClick={() => navigate("/hotels")} className="pri-btn mt-2">
+      <button onClick={() => navigate("/hotels")} className="pri-btn mt-2 font-normal">
         Explore
       </button>
     </div>

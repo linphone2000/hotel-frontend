@@ -24,7 +24,7 @@ const Modal = ({ children }) => {
         transition={{ duration: 0.3 }}
       >
         <button className="close-button" onClick={closeModal}>
-          &times;
+          <i className="fa-solid fa-xmark text-xl transition-colors hover:text-slate-50"></i>
         </button>
         {children}
       </motion.div>

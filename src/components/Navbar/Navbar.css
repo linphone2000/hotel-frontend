@@ -22,27 +22,27 @@
 }
 
 .nav-links li a {
-    color: #fff;
+    color: #3d3d3d;
     text-decoration: none;
     cursor: pointer;
     transition: ease 0.3s;
+    font-weight: 200;
 }
 
 .nav-links li a:hover {
     color: #2C3639;
 }
 
-.logo {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1.5rem;
-    font-weight: bold;
+.nav-links>li>button>i{
+    padding: 2px 5px;
 }
 
 /* Mobile */
 @media (max-width:500px) {
-    .nav-links{
+    .nav-links {
         gap: 7.5px;
     }
+
     .nav-links>li {
         margin-right: 0;
     }

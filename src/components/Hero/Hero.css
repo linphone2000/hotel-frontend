@@ -1,6 +1,6 @@
 #hero-section {
     position: relative;
-    margin-top: -4rem;
+    margin-top: -4.5rem;
     position: relative;
     height: 100vh;
     width: 100%;
@@ -27,13 +27,17 @@
     border: 2px solid transparent;
     border-radius: 30px;
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 5%;
+}
+
+.hero-heading{
+    letter-spacing: 2px;
 }
 
 @media (max-width:500px) {
     .brand-container {
-        top: 20%;
+        top: 35%;
     }
 
     .brand-container>h1 {

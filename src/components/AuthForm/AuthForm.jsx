@@ -18,6 +18,19 @@ function AuthForm() {
   const phoneRef = useRef(null);
   const addressRef = useRef(null);
 
+  // Inputs
+  const inputs = [
+    { label: "Email:", ref: usernameRef, type: "text", required: true },
+    { label: "Password:", ref: passwordRef, type: "password", required: true },
+    ...(mode === "register"
+      ? [
+          { label: "Name:", ref: fullNameRef, type: "text", required: true },
+          { label: "Phone:", ref: phoneRef, type: "text", required: true },
+          { label: "Address:", ref: addressRef, type: "text", required: true },
+        ]
+      : []),
+  ];
+
   // Context
   const { showToast } = useUIModal();
   const { register, login } = useAuth();
@@ -31,7 +44,10 @@ function AuthForm() {
     animate: {
       opacity: 0,
       scale: 1,
-      transition: { duration: 0.3 },
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
     },
   };
 
@@ -43,12 +59,12 @@ function AuthForm() {
 
   // Handlers
   const handleModeChange = () => {
-    setIsAnimated((prev) => !prev);
+    setIsAnimated(true);
     setIsRegisteredMode((prev) => !prev);
     setTimeout(() => {
       setMode(mode === "login" ? "register" : "login");
       setIsAnimated(false);
-    }, 300);
+    }, 500);
   };
 
   // Submit
@@ -95,9 +111,12 @@ function AuthForm() {
           isRegisteredMode == true ? "expended" : ""
         }`}
       >
+        {/* Left Pane */}
         <div className="image-container flex justify-center ">
           <img src="assets/loginform.jpeg" className="max-h-screen" />
         </div>
+
+        {/* Right Pane */}
         <div className="auth-form-container">
           <motion.h2
             variants={textVariants}
@@ -105,61 +124,27 @@ function AuthForm() {
           >
             {mode === "login" ? "Login" : "Register"}
           </motion.h2>
+
+          {/* Form */}
           <motion.form
             variants={textVariants}
             animate={isAnimated ? "animate" : "initial"}
             onSubmit={handleSubmit}
             transition={{ staggerChildren: 0.1 }}
           >
-            <div>
-              <label>Username:</label>
-              <motion.input
-                ref={usernameRef}
-                type="text"
-                variants={textVariants}
-                required={true}
-              />
-            </div>
-            <div>
-              <label>Password:</label>
-              <motion.input
-                ref={passwordRef}
-                type="password"
-                variants={textVariants}
-                required={true}
-              />
-            </div>
-            {mode === "register" && (
-              <>
-                <div>
-                  <label>Full Name:</label>
-                  <motion.input
-                    type="text"
-                    ref={fullNameRef}
-                    variants={textVariants}
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label>Phone:</label>
-                  <motion.input
-                    type="text"
-                    ref={phoneRef}
-                    variants={textVariants}
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <label>Address:</label>
-                  <motion.input
-                    type="text"
-                    ref={addressRef}
-                    variants={textVariants}
-                    required={true}
-                  />
-                </div>
-              </>
-            )}
+            {inputs.map((input, index) => (
+              <div key={index}>
+                <label>{input.label}</label>
+                <motion.input
+                  ref={input.ref}
+                  type={input.type}
+                  required={input.required}
+                  variants={textVariants}
+                />
+              </div>
+            ))}
+
+            {/* Submit */}
             <div className="button-container">
               <motion.button
                 variants={textVariants}
@@ -172,6 +157,7 @@ function AuthForm() {
             </div>
           </motion.form>
 
+          {/* Mode Change */}
           <motion.p
             variants={textVariants}
             animate={isAnimated ? "animate" : "initial"}
