@@ -25,7 +25,7 @@ const Hero = () => {
           className="pri-btn-outline text-white px-6 py-3 w-48 text-center rounded-lg transition-colors duration-300"
         >
           Find Your Hotel
-          <i class="fa-solid fa-chevron-right ml-2 animate-pulse"></i>
+          <i className="fa-solid fa-chevron-right ml-2 animate-pulse"></i>
         </button>
       </motion.div>
     </section>
