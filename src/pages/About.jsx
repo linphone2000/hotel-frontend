@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 const About = () => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }} // Initial animation properties
-      animate={{ opacity: 1, y: 0 }} // Animation properties when component is mounted
-      transition={{ duration: 0.5 }} // Transition duration
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }} 
       className="p-10 text-xl"
     >
       <p className="p-10 text-xl">

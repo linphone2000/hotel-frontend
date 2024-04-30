@@ -17,10 +17,10 @@ export const AuthProvider = ({ children }) => {
   const { flaskAPI } = useData();
   const { showToast, handleCloseModal } = useUIModal();
 
+  // Fetching for logged in user
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
-      // console.log(JSON.parse(storedUser));
       setCurrentUser(JSON.parse(storedUser));
     }
   }, []);

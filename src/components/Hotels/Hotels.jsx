@@ -7,13 +7,13 @@ const Hotels = () => {
   // Consumer
   const {
     hotels,
+    selectedHotel,
     setSelectedHotel,
     selectedRooms,
     loading,
     hotelLoading,
     flaskAPI,
   } = useData();
-
   // State
   const [imageLoading, setImageLoading] = useState(true); // Hotel
   const [roomImageloading, setRoomImageLoading] = useState(true); //Room
@@ -36,7 +36,7 @@ const Hotels = () => {
       <div className="grid-container">
         {/* Left panel */}
         <motion.div
-          className="col1 bg-gray-200"
+          className="col1 bg-gray-200 h-screen overflow-y-auto"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
@@ -58,7 +58,10 @@ const Hotels = () => {
                 <div className="hotel-image-container">
                   {imageLoading && (
                     <div className="animate-pulse my-2">
-                      <img className="rounded-md mx-auto h-32 w-52" src="assets/placeholder.png" />
+                      <img
+                        className="rounded-md mx-auto h-32 w-52"
+                        src="assets/placeholder.png"
+                      />
                     </div>
                   )}{" "}
                   <img
@@ -77,7 +80,7 @@ const Hotels = () => {
         </motion.div>
 
         {/* Right panel */}
-        <div className="col2 bg-mycolor">
+        <div className="col2 bg-mycolor h-screen overflow-y-auto">
           {loading ? (
             <div className="flex justify-center items-center h-full">
               {" "}
@@ -92,15 +95,18 @@ const Hotels = () => {
             >
               {selectedRooms.map((room) => (
                 <li key={room._id}>
-                  <p>Room Number: {room.room_number}</p>
-                  <p>Room Type: {room.room_type}</p>
+                  <p>Room Number: {room.roomNumber}</p>
+                  <p>Room Type: {room.roomType}</p>
                   <p>Description: {room.description}</p>
-                  <p>Max Occupancy: {room.max_occupancy}</p>
+                  <p>Max Occupancy: {room.maxOccupancy}</p>
                   <p>Price: {room.price}</p>
                   <div className="hotel-image-container">
                     {roomImageloading && (
                       <div className="animate-pulse my-2">
-                        <img className="rounded-md h-32 w-52" src="assets/placeholder.png" />
+                        <img
+                          className="rounded-md h-32 w-52"
+                          src="assets/placeholder.png"
+                        />
                       </div>
                     )}{" "}
                     <img
@@ -116,8 +122,12 @@ const Hotels = () => {
                 </li>
               ))}
             </motion.ul>
+          ) : selectedHotel == undefined ? (
+            <p>No hotel selected</p>
+          ) : selectedRooms.length == 0 ? (
+            <p>No rooms in this hotel</p>
           ) : (
-            <p>No rooms selected</p>
+            <p>Nothing exists</p>
           )}
         </div>
       </div>

@@ -1,8 +1,12 @@
-// UIModalContext.js
-import React, { createContext, useState, useContext, useMemo, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
 import { toast } from "react-toastify";
-import { useLocation } from 'react-router-dom';
-
+import { useLocation } from "react-router-dom";
 
 const UIModalContext = createContext();
 
@@ -24,6 +28,7 @@ export const UIModalProvider = ({ children }) => {
     setIsModalOpen(false);
   };
 
+  // Custom toast
   const showToast = (type, message) => {
     if (type === "success") {
       toast.success(message, { autoClose: 1500 });
