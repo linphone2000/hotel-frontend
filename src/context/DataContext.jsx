@@ -13,29 +13,30 @@ export const DataProvider = ({ children }) => {
   const flaskAPI = "http://localhost:5001";
 
   // States
-  const [rooms, setRooms] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [selectedHotel, setSelectedHotel] = useState();
+  const [selectedHotelData, setSelectedHotelData] = useState();
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [hotelLoading, setHotelLoading] = useState(true);
 
   // Fetch rooms on load
-  useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const response = await axios.get(flaskAPI + "/rooms");
-        setRooms(response.data);
-      } catch (error) {
-        console.error("Error fetching rooms:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (loading == true) {
-      fetchRooms();
-    }
-  }, [loading, rooms]);
+  // useEffect(() => {
+  //   const fetchRooms = async () => {
+  //     try {
+  //       const response = await axios.get(flaskAPI + "/rooms");
+  //       setRooms(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching rooms:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   if (loading == true) {
+  //     fetchRooms();
+  //     console.log(rooms);
+  //   }
+  // }, [loading, rooms]);
 
   // Fetch hotels on load
   useEffect(() => {
@@ -43,7 +44,6 @@ export const DataProvider = ({ children }) => {
       try {
         const response = await axios.get(flaskAPI + "/hotels");
         setHotels(response.data);
-        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching room:", error);
       } finally {
@@ -52,23 +52,20 @@ export const DataProvider = ({ children }) => {
     };
     if (hotelLoading == true) {
       fetchHotels();
+      console.log(hotels);
     }
   }, [hotelLoading]);
 
   // Fetch rooms by hotel ID
   useEffect(() => {
-    const fetchRoomsByHotelId = async () => {
+    const fetchRoomsByHotelId = async (hotelID) => {
       try {
         setLoading(true);
-        if (selectedHotel) {
-          const response = await axios.get(
-            flaskAPI + "/rooms/" + selectedHotel
-          );
-          if (response.status != 200) {
-            setSelectedRooms([]);
-          } else {
-            setSelectedRooms(response.data);
-          }
+        const response = await axios.get(flaskAPI + "/rooms/" + hotelID);
+        if (response.status != 200) {
+          setSelectedRooms([]);
+        } else {
+          setSelectedRooms(response.data);
         }
       } catch (error) {
         console.error("Error fetching rooms:", error);
@@ -76,29 +73,54 @@ export const DataProvider = ({ children }) => {
         setLoading(false);
       }
     };
-    fetchRoomsByHotelId();
+    if (selectedHotel) {
+      fetchRoomsByHotelId(selectedHotel);
+    }
   }, [selectedHotel]);
 
-  // Test logging
-  // useEffect(() => {
-  //   console.log("Hotel: " + selectedHotel);
-  // }, [selectedHotel]);
+  // Fetch hotel by hotel ID
+  useEffect(() => {
+    const fetchHotelDataBySelection = async (hotelID) => {
+      try {
+        setLoading(true);
+        const response = await axios.get(flaskAPI + "/hotels/" + hotelID);
+        if (response.status == 200) {
+          setSelectedHotelData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching hotel:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (selectedHotel) {
+      fetchHotelDataBySelection(selectedHotel);
+    }
+  }, [selectedHotel]);
 
   // Memo
   const dataContextValue = useMemo(
     () => ({
-      rooms,
       hotels,
       selectedHotel,
-      setSelectedHotel,
+      selectedHotelData,
       selectedRooms,
+      setSelectedHotel,
+      setSelectedHotelData,
       setSelectedRooms,
       loading,
       hotelLoading,
       setLoading,
       flaskAPI,
     }),
-    [rooms, hotels, selectedHotel, selectedRooms, loading]
+    [
+      hotels,
+      selectedHotel,
+      selectedHotelData,
+      selectedRooms,
+      loading,
+      hotelLoading,
+    ]
   );
 
   return (
