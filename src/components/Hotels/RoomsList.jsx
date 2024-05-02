@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useData } from "../../context/DataContext";
-import HotelInfo from "./HotelInfo";
+import HotelInfo from "./HotelInfo/HotelInfo";
+import Room from "./Room";
+import Spinner from "../Spinner/Spinner";
 
-const RoomsList = ({ roomImageloading, handleRoomLoad }) => {
-  const { loading, selectedRooms, flaskAPI, selectedHotelData } = useData();
+const RoomsList = ({}) => {
+  const { loading, selectedRooms, selectedHotelData } = useData();
 
   return (
     <div className="col-span-6 p-4 bg-mycolor h-screen overflow-y-auto">
@@ -12,9 +14,7 @@ const RoomsList = ({ roomImageloading, handleRoomLoad }) => {
 
       {/* Rooms */}
       {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
+        <Spinner />
       ) : selectedRooms.length > 0 ? (
         <motion.ul
           initial={{ opacity: 0, x: 20 }}
@@ -23,36 +23,14 @@ const RoomsList = ({ roomImageloading, handleRoomLoad }) => {
           className="p-4"
         >
           {selectedRooms.map((room) => (
-            <li key={room._id}>
-              <p>Room Number: {room.roomNumber}</p>
-              <p>Room Type: {room.roomType}</p>
-              <p>Description: {room.description}</p>
-              <p>Max Occupancy: {room.maxOccupancy}</p>
-              <p>Price: {room.price}</p>
-              <div className="hotel-image-container">
-                {roomImageloading && (
-                  <div className="animate-pulse my-2">
-                    <img
-                      className="rounded-md h-32 w-52"
-                      src="assets/placeholder.png"
-                    />
-                  </div>
-                )}
-                <img
-                  className={`h-32 w-52 my-2 object-cover rounded-md ${
-                    roomImageloading ? "hidden" : ""
-                  }`}
-                  src={`${flaskAPI}/get_image/${room.image}`}
-                  alt="Room Image"
-                  onLoad={handleRoomLoad}
-                />
-              </div>
-              <hr></hr>
-            </li>
+            <Room key={room._id} room={room} />
           ))}
         </motion.ul>
       ) : (
-        <p>No hotel selected</p>
+        <div className="flex flex-col items-center justify-center h-full gap-4">
+          <i className="fa-solid fa-circle-exclamation text-gray-500 text-5xl"></i>
+          <p className="text-gray-500 text-lg">Please select a hotel to get started.</p>
+        </div>
       )}
     </div>
   );

@@ -17,26 +17,9 @@ export const DataProvider = ({ children }) => {
   const [selectedHotel, setSelectedHotel] = useState();
   const [selectedHotelData, setSelectedHotelData] = useState();
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [hotelLoading, setHotelLoading] = useState(true);
-
-  // Fetch rooms on load
-  // useEffect(() => {
-  //   const fetchRooms = async () => {
-  //     try {
-  //       const response = await axios.get(flaskAPI + "/rooms");
-  //       setRooms(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching rooms:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   if (loading == true) {
-  //     fetchRooms();
-  //     console.log(rooms);
-  //   }
-  // }, [loading, rooms]);
+  const [loading, setLoading] = useState(false); // Used for room loading
+  const [hotelsLoading, setHotelsLoading] = useState(true); // Used for multiple hotels loading
+  const [hotelLoading, setHotelLoading] = useState(true); // Used for single hotel loading
 
   // Fetch hotels on load
   useEffect(() => {
@@ -47,14 +30,13 @@ export const DataProvider = ({ children }) => {
       } catch (error) {
         console.error("Error fetching room:", error);
       } finally {
-        setHotelLoading(false);
+        setHotelsLoading(false);
       }
     };
-    if (hotelLoading == true) {
+    if (hotelsLoading == true) {
       fetchHotels();
-      console.log(hotels);
     }
-  }, [hotelLoading]);
+  }, [hotelsLoading]);
 
   // Fetch rooms by hotel ID
   useEffect(() => {
@@ -82,7 +64,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchHotelDataBySelection = async (hotelID) => {
       try {
-        setLoading(true);
+        setHotelLoading(true);
         const response = await axios.get(flaskAPI + "/hotels/" + hotelID);
         if (response.status == 200) {
           setSelectedHotelData(response.data);
@@ -90,7 +72,7 @@ export const DataProvider = ({ children }) => {
       } catch (error) {
         console.error("Error fetching hotel:", error);
       } finally {
-        setLoading(false);
+        setHotelLoading(false);
       }
     };
     if (selectedHotel) {
@@ -109,6 +91,7 @@ export const DataProvider = ({ children }) => {
       setSelectedHotelData,
       setSelectedRooms,
       loading,
+      hotelsLoading,
       hotelLoading,
       setLoading,
       flaskAPI,
@@ -119,6 +102,7 @@ export const DataProvider = ({ children }) => {
       selectedHotelData,
       selectedRooms,
       loading,
+      hotelsLoading,
       hotelLoading,
     ]
   );
