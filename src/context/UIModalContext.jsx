@@ -43,8 +43,6 @@ export const UIModalProvider = ({ children }) => {
     }
   };
 
-  console.log(modalForm);
-
   // Memo
   const UIModalContextValue = useMemo(
     () => ({

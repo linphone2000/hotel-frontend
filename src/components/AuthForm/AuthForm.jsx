@@ -12,7 +12,7 @@ function AuthForm() {
   const [isRegisteredMode, setIsRegisteredMode] = useState(false);
 
   // Refs
-  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const fullNameRef = useRef(null);
   const phoneRef = useRef(null);
@@ -20,7 +20,7 @@ function AuthForm() {
 
   // Inputs
   const inputs = [
-    { label: "Email:", ref: usernameRef, type: "text", required: true },
+    { label: "Email:", ref: emailRef, type: "text", required: true },
     { label: "Password:", ref: passwordRef, type: "password", required: true },
     ...(mode === "register"
       ? [
@@ -53,7 +53,7 @@ function AuthForm() {
 
   // Effect
   useEffect(() => {
-    usernameRef.current.value = "";
+    emailRef.current.value = "";
     passwordRef.current.value = "";
   }, []);
 
@@ -71,7 +71,7 @@ function AuthForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
-      username: usernameRef.current.value,
+      email: emailRef.current.value,
       password: passwordRef.current.value,
     };
     if (mode === "register") {
@@ -82,7 +82,7 @@ function AuthForm() {
     try {
       // Login
       if (mode === "login") {
-        login(userData.username, userData.password);
+        login(userData.email, userData.password);
       } else {
         // Register
         const response = await register(userData);
@@ -97,7 +97,7 @@ function AuthForm() {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        showToast("error", "Username already taken!");
+        showToast("error", "Email already taken!");
       } else {
         showToast("error", "Invalid credentials!");
       }

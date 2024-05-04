@@ -3,10 +3,14 @@ import { useData } from "../../context/DataContext";
 import Spinner from "../Spinner/Spinner";
 import ImageLoading from "../ImageLoading/ImageLoading";
 import CustomDateRangePicker from "../CustomDatePicker/CustomDateRangePicker";
+import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 const BookForm = () => {
   // Context
-  const { selectedRoomData, roomLoading, flaskAPI } = useData();
+  const { selectedRoomData, roomLoading, flaskAPI, setBookingStatus } =
+    useData();
+  const { currentUser } = useAuth();
 
   // State
   const [roomImage, setRoomImage] = useState(null);
@@ -35,13 +39,20 @@ const BookForm = () => {
   const handleSelect = (range) => {
     setSelectedRange(range);
   };
-
-  // Sample unavailable dates
-  const unavailableDates = [
-    new Date("2024-05-14"),
-    new Date("2024-05-15"),
-    new Date("2024-05-16"),
-  ];
+  const handleSubmit = async () => {
+    const datesToAdd = [];
+    let currentDate = new Date(selectedRange.startDate);
+    const endDate = new Date(selectedRange.endDate);
+    while (currentDate <= endDate) {
+      datesToAdd.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    const response = await axios.post(flaskAPI + "/book", {
+      roomID: selectedRoomData._id,
+      unavailableDates: datesToAdd,
+    });
+    response.status == 200 && setBookingStatus((prev) => !prev);
+  };
 
   return (
     <>
@@ -65,6 +76,7 @@ const BookForm = () => {
             </div>
 
             {/* Room Data */}
+            {console.log(selectedRoomData.unavailable_dates)}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-semibold">
                 Room Type:{" "}
@@ -72,7 +84,8 @@ const BookForm = () => {
                   capitalizeFirstLetter(selectedRoomData.roomType)}
               </h2>
               <p className="text-gray-600">
-                Room Number: <span className="font-bold">{selectedRoomData.roomNumber}</span>
+                Room Number:{" "}
+                <span className="font-bold">{selectedRoomData.roomNumber}</span>
               </p>
             </div>
             <p className="text-gray-600 mb-4">{selectedRoomData.description}</p>
@@ -90,7 +103,9 @@ const BookForm = () => {
           {/* Date Picker */}
           <div className="text-center">
             <CustomDateRangePicker
-              unavailableDates={unavailableDates}
+              unavailableDates={
+                selectedRoomData != null && selectedRoomData.unavailable_dates
+              }
               onSelect={handleSelect}
             />
 
@@ -101,6 +116,12 @@ const BookForm = () => {
                 {selectedRange.endDate.toDateString()}
               </p>
             )}
+            <button
+              className="bg-slate-100 text-gray-800 px-4 py-2 rounded-lg transition hover:bg-orange-100 focus:outline-none focus:ring focus:ring-orange-300"
+              onClick={handleSubmit}
+            >
+              Book
+            </button>
           </div>
         </div>
       ) : (

@@ -23,6 +23,7 @@ export const DataProvider = ({ children }) => {
   const [hotelsLoading, setHotelsLoading] = useState(true); // Used for multiple hotels loading
   const [hotelLoading, setHotelLoading] = useState(true); // Used for single hotel loading
   const [roomLoading, setRoomLoading] = useState(true);
+  const [bookingStatus, setBookingStatus] = useState(false); // To re-render the booking modal
 
   // Fetch hotels on load
   useEffect(() => {
@@ -82,7 +83,7 @@ export const DataProvider = ({ children }) => {
     if (selectedRoom != null) {
       fetchRoomByRoomId(selectedRoom);
     }
-  }, [selectedRoom]);
+  }, [selectedRoom, bookingStatus]);
 
   // Fetch hotel by hotel ID
   useEffect(() => {
@@ -122,6 +123,7 @@ export const DataProvider = ({ children }) => {
       roomLoading,
       setLoading,
       flaskAPI,
+      setBookingStatus,
     }),
     [
       hotels,
@@ -133,6 +135,7 @@ export const DataProvider = ({ children }) => {
       hotelsLoading,
       hotelLoading,
       roomLoading,
+      bookingStatus,
     ]
   );
 

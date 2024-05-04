@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { useData } from "./DataContext";
 import { useUIModal } from "./UIModalContext";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const { flaskAPI } = useData();
   const { showToast, handleCloseModal } = useUIModal();
+  const navigate = useNavigate();
 
   // Fetching for logged in user
   useEffect(() => {
@@ -34,13 +36,13 @@ export const AuthProvider = ({ children }) => {
   // Handlers
   // Register
   const register = async (userData) => {
-    const username = userData.username;
+    const email = userData.email;
     const password = userData.password;
     const fullName = userData.fullName;
     const phone = userData.phone;
     const address = userData.address;
     const response = await axios.post(flaskAPI + "/register", {
-      username,
+      email,
       password,
       fullName,
       phone,
@@ -49,14 +51,16 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
   // Login
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     const response = await axios.post(flaskAPI + "/login", {
-      username,
+      email,
       password,
     });
     if (response.data.user) {
-      setCurrentUser(response.data.user);
-      localStorage.setItem("currentUser", JSON.stringify(response.data.user));
+      const user = response.data.user;
+      const email = response.data.user.email;
+      setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(email));
       showToast("success", response.data.message);
     } else {
       showToast("error", response.data.message);
@@ -64,6 +68,7 @@ export const AuthProvider = ({ children }) => {
   };
   // Logout
   const logout = () => {
+    navigate("/");
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
     showToast("info", "Loggout out!");

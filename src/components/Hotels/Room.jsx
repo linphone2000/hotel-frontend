@@ -2,18 +2,24 @@ import { useEffect, useState } from "react";
 import { useData } from "../../context/DataContext";
 import ImageLoading from "../ImageLoading/ImageLoading";
 import { useUIModal } from "../../context/UIModalContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Room = ({ room }) => {
   // Context and state
   const { flaskAPI, setSelectedRoom } = useData();
-  const { handleOpenModal, handleSetModalForm } = useUIModal();
+  const { currentUser } = useAuth();
+  const { handleOpenModal, handleSetModalForm, showToast } = useUIModal();
   const [roomImage, setRoomImage] = useState(null);
 
   // Handlers
   const handleBook = (formName, roomID) => {
-    handleSetModalForm(formName);
-    setSelectedRoom(roomID);
-    handleOpenModal();
+    if (currentUser) {
+      handleSetModalForm(formName);
+      setSelectedRoom(roomID);
+      handleOpenModal();
+    } else {
+      showToast("error", "Please Log In");
+    }
   };
 
   // Effect

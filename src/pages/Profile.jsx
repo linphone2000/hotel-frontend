@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <>
       <div className="text-center my-8">
-        <h1 className="text-5xl">{currentUser}</h1>
+        <h1 className="text-5xl">{currentUser.fullName}</h1>
       </div>
     </>
   );
