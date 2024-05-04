@@ -4,10 +4,15 @@ import "./Navbar.css";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "./Dropdown/Dropdown";
+import { useUIModal } from "../../context/UIModalContext";
+import Modal from "../Modal/Modal";
+import AuthForm from "../AuthForm/AuthForm";
+import BookForm from "../BookForm/BookForm";
 
 const Navbar = () => {
   // Providers
   const { currentUser } = useAuth();
+  const { modalForm } = useUIModal();
   const navigate = useNavigate();
 
   // States
@@ -27,38 +32,55 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="navbar text-lg"
-    >
-      {/* Logo */}
-      <div className="navbar-brand">
-        <a
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <div className="logo rounded-md transition-colors hover:bg-mycolor">
-            <img className="w-32 px-5 py-2" src="assets/Logo-Transparent.png" />
-          </div>
-        </a>
-      </div>
+    <>
+      {/* Modal */}
+      {modalForm === "book" ? (
+        <Modal>
+          <BookForm />
+        </Modal>
+      ) : (
+        <Modal>
+          <AuthForm />
+        </Modal>
+      )}
 
-      {/* Dummy */}
-      {/* <p>{currentUser ? currentUser : ""}</p> */}
+      {/* Navbar */}
+      <motion.nav
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="navbar text-lg"
+      >
+        {/* Logo */}
+        <div className="navbar-brand">
+          <a
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <div className="logo rounded-md transition-colors hover:bg-mycolor">
+              <img
+                className="w-32 px-5 py-2"
+                src="assets/Logo-Transparent.png"
+              />
+            </div>
+          </a>
+        </div>
 
-      {/* Right side of nav */}
-      <ul className="nav-links">
-        <li>
-          <button onClick={handleOpen} className="">
-            <i className="fa-solid fa-bars text-white text-xl transition-all border-transparent hover:text-slate-600 hover:border hover:border-slate-600 hover:rounded-md"></i>
-          </button>
-        </li>
-        <Dropdown isOpen={isOpen} handleNavigation={handleNavigation} />
-      </ul>
-    </motion.nav>
+        {/* Dummy */}
+        {/* <p>{currentUser ? currentUser : ""}</p> */}
+
+        {/* Right side of nav */}
+        <ul className="nav-links">
+          <li>
+            <button onClick={handleOpen} className="">
+              <i className="fa-solid fa-bars text-white text-xl transition-all border-transparent hover:text-slate-600 hover:border hover:border-slate-600 hover:rounded-md"></i>
+            </button>
+          </li>
+          <Dropdown isOpen={isOpen} handleNavigation={handleNavigation} />
+        </ul>
+      </motion.nav>
+    </>
   );
 };
 

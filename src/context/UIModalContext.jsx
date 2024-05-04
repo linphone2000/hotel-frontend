@@ -13,6 +13,7 @@ const UIModalContext = createContext();
 export const UIModalProvider = ({ children }) => {
   // States
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalForm, setModalForm] = useState();
 
   // Effect
   const { pathname } = useLocation();
@@ -27,6 +28,9 @@ export const UIModalProvider = ({ children }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const handleSetModalForm = (formName) => {
+    setModalForm(formName);
+  };
 
   // Custom toast
   const showToast = (type, message) => {
@@ -39,6 +43,8 @@ export const UIModalProvider = ({ children }) => {
     }
   };
 
+  console.log(modalForm);
+
   // Memo
   const UIModalContextValue = useMemo(
     () => ({
@@ -46,8 +52,10 @@ export const UIModalProvider = ({ children }) => {
       handleOpenModal,
       handleCloseModal,
       showToast,
+      handleSetModalForm,
+      modalForm,
     }),
-    [isModalOpen]
+    [isModalOpen, modalForm]
   );
 
   return (

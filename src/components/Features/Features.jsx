@@ -34,7 +34,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="features-section" className="px-4 py-8">
+    <section className="px-4 py-8">
       <h2 className="text-3xl font-light text-center mb-8">
         Explore Our Features
       </h2>

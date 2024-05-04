@@ -20,7 +20,6 @@ const HotelInfo = () => {
       image.src = `${flaskAPI}/get_image/${selectedHotelData.image}`;
       image.onload = () => {
         setHotelImage(image);
-        console.log("Image loaded");
       };
     }
     return () => {
@@ -39,7 +38,7 @@ const HotelInfo = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="py-2 px-5 bg-gray-200 rounded-md border-b flex justify-between gap-4"
+          className="py-2 px-5 bg-gray-300 rounded-md border-b flex justify-between gap-4"
         >
           <div className="relative w-1/2">
             {hotelImage == null ? (
@@ -74,15 +73,20 @@ const HotelInfo = () => {
             </div>
           </div>
           {/* Right hotel infomation pane */}
-          <div className="text-right flex flex-col w-1/2">
-            <h1 className=" text-xl mb-2 font-bold">
-              {selectedHotelData.name}
-            </h1>
+          <div className="text-right gap-1 pt-2 flex flex-col w-1/2">
             <p className=" font-medium">{selectedHotelData.description}</p>
-            <p className=" font-medium">{selectedHotelData.address}</p>
+            <p className=" font-medium">Located at: {selectedHotelData.address}</p>
             {/* <p className="font-medium">{selectedHotelData.amenities}</p> */}
-            <p className=" font-medium">{selectedHotelData.checkInTime}</p>
-            <p className=" font-medium">{selectedHotelData.checkOutTime}</p>
+            <p className="font-medium">
+              {selectedHotelData.checkInTime >= "12:00"
+                ? `Check in Time: ${selectedHotelData.checkInTime} PM`
+                : `Check in Time: ${selectedHotelData.checkInTime} AM`}
+            </p>
+            <p className="font-medium">
+              {selectedHotelData.checkInTime >= "12:00"
+                ? `Check out Time: ${selectedHotelData.checkInTime} PM`
+                : `Check out Time: ${selectedHotelData.checkInTime} AM`}
+            </p>
           </div>
         </motion.div>
       )}

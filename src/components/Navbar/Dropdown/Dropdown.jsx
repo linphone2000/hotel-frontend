@@ -8,8 +8,14 @@ import NavItem from "../NavItems/NavItem";
 
 const Dropdown = ({ isOpen, handleNavigation }) => {
   // Context
-  const { handleOpenModal } = useUIModal();
+  const { handleOpenModal, handleSetModalForm } = useUIModal();
   const { currentUser, logout } = useAuth();
+
+  // Handler
+  const handleLoginClicked = () => {
+    handleSetModalForm("login");
+    handleOpenModal();
+  };
 
   return (
     <AnimatePresence>
@@ -57,7 +63,7 @@ const Dropdown = ({ isOpen, handleNavigation }) => {
             {/* Login/Register */}
             <NavItem
               handleNavigation={handleNavigation}
-              onClick={currentUser ? logout : handleOpenModal}
+              onClick={currentUser ? logout : handleLoginClicked}
             >
               {currentUser ? "Logout" : "Login"}
             </NavItem>

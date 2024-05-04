@@ -14,7 +14,7 @@ const Hotel = ({ handleHotelSelect, hotel }) => {
     image.onload = () => {
       setHotelImage(image);
     };
-  });
+  }, []);
 
   return (
     <>
