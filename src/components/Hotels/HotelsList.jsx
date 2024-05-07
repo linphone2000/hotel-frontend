@@ -8,7 +8,7 @@ const HotelsList = ({ handleHotelSelect }) => {
 
   return (
     <motion.div
-      className="col-span-2 p-4 bg-gray-200 h-screen overflow-y-auto"
+      className="p-4 h-full md:h-screen bg-gray-200 overflow-y-auto"
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}

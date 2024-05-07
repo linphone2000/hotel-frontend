@@ -6,9 +6,9 @@ const Footer = () => {
       <hr className="bg-slate-300 m-10"></hr>
       <div className="container mx-auto px-4 py-8 flex flex-wrap md:justify-between justify-center">
         <div className="footer-left">
-          <h1 className="text-xl font-bold text-gray-500">Your Company Name</h1>
+          <h1 className="text-xl font-bold text-gray-500">Scape Booking</h1>
           <p className="text-gray-400 text-base mt-2">
-            A brief description of your company or what you do.
+            A brief description of scape or what we do.
           </p>
           <div className="social-media mt-4">
             <a href="#" className="text-gray-400 hover:text-white mr-4">
@@ -41,7 +41,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="copyright text-center text-gray-400 py-4">
-        &copy; 2024 Your Company Name. All Rights Reserved.
+        &copy; 2024 Scape Booking. All Rights Reserved.
       </div>
     </footer>
   );

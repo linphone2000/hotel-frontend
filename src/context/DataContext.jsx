@@ -105,6 +105,8 @@ export const DataProvider = ({ children }) => {
     }
   }, [selectedHotel]);
 
+  // Testing
+
   // Memo
   const dataContextValue = useMemo(
     () => ({
@@ -123,6 +125,7 @@ export const DataProvider = ({ children }) => {
       roomLoading,
       setLoading,
       flaskAPI,
+      bookingStatus,
       setBookingStatus,
     }),
     [

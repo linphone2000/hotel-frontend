@@ -58,7 +58,7 @@ const Navbar = () => {
               navigate("/");
             }}
           >
-            <div className="logo rounded-md transition-colors hover:bg-mycolor">
+            <div className="logo rounded-md transition-colors hover:bg-brandhover">
               <img
                 className="w-32 px-5 py-2"
                 src="assets/Logo-Transparent.png"

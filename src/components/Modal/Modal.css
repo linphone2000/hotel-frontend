@@ -67,4 +67,8 @@
         max-width: 95%;
         width: 95%;
     }
+    .modal-box.book {
+        max-width: 90%;
+        max-height: 95%;
+    }
 }

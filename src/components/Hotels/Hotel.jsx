@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useData } from "../../context/DataContext";
 import ImageLoading from "../ImageLoading/ImageLoading";
+import Stars from "./HotelInfo/StarComponent/Stars";
 
 const Hotel = ({ handleHotelSelect, hotel }) => {
   // State
@@ -24,8 +25,6 @@ const Hotel = ({ handleHotelSelect, hotel }) => {
           hotel._id == selectedHotel && "!shadow-2xl"
         }`}
       >
-        <p className="text-lg">{hotel.name}</p>
-        <p>{hotel.city}</p>
         <div className="relative w-full h-full">
           {hotelImage == null ? (
             <ImageLoading scale={"w-52 h-32"} isCenter={true} />
@@ -36,6 +35,13 @@ const Hotel = ({ handleHotelSelect, hotel }) => {
               alt="Hotel Image"
             />
           )}
+        </div>
+        <div className="flex flex-col gap-1">
+          <p className="text-lg font-semibold">{hotel.name}</p>
+          <p className="text-grap-600">{hotel.city}</p>
+          <div className="flex justify-center text-xs">
+            <Stars rating={hotel.rating} />
+          </div>
         </div>
       </div>
     </>

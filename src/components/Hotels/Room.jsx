@@ -31,20 +31,28 @@ const Room = ({ room }) => {
     };
   }, [room]);
 
+  // Capitalize Function
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="relative">
         {roomImage ? (
           <img
-            className="w-full h-64 object-cover rounded-t-lg"
+            className="w-full h-48 object-cover rounded-t-lg"
             src={roomImage.src}
             alt="Room Image"
           />
         ) : (
-          <div className="w-full h-64 flex items-center justify-center bg-gray-200">
-            <ImageLoading scale="w-40 h-40" />
+          <div className="w-full h-48 flex items-center justify-center overflow-hidden bg-gray-200">
+            <ImageLoading scale="" />
           </div>
         )}
+        <div className="absolute top-0 right-0 p-2 bg-gray-500 bg-opacity-40 text-white font-semibold rounded-bl-lg">
+          No. {room.roomNumber}
+        </div>
         <div className="absolute bottom-0 left-0 p-4">
           <button
             onClick={() => handleBook("book", room._id)}
@@ -55,7 +63,9 @@ const Room = ({ room }) => {
         </div>
       </div>
       <div className="p-4">
-        <h3 className="text-xl font-semibold">{room.roomType}</h3>
+        <h3 className="text-xl font-semibold">
+          {capitalizeFirstLetter(room.roomType)}
+        </h3>
         <ul className="mt-4">
           <li className="flex items-center text-gray-700">
             <span>Max Occupancy: {room.maxOccupancy}</span>

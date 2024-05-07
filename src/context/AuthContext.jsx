@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // Closing modal after successful login
   useEffect(() => {
     if (currentUser) {
       handleCloseModal();
@@ -50,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     });
     return response;
   };
+
   // Login
   const login = async (email, password) => {
     const response = await axios.post(flaskAPI + "/login", {
@@ -58,14 +60,16 @@ export const AuthProvider = ({ children }) => {
     });
     if (response.data.user) {
       const user = response.data.user;
-      const email = response.data.user.email;
       setCurrentUser(user);
-      localStorage.setItem("currentUser", JSON.stringify(email));
+      localStorage.setItem("currentUser", JSON.stringify(user));
       showToast("success", response.data.message);
+    } else if (response.status == 204) {
+      showToast("error", "User doesn't exists");
     } else {
       showToast("error", response.data.message);
     }
   };
+
   // Logout
   const logout = () => {
     navigate("/");

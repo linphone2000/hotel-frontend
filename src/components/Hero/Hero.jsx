@@ -31,7 +31,7 @@ const Hero = ({ onClick }) => {
       <div
         id="features-section"
         onClick={onClick}
-        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 hover:cursor-pointer translate-y-1/2  animate-bounce"
+        className="absolute bottom-0 w-full text-center hover:cursor-pointer  animate-bounce"
       >
         <i className="fa-solid fa-angles-down text-slate-100 text-2xl rounded-lg transition-all hover:border p-2"></i>
       </div>
