@@ -1,3 +1,4 @@
+// React
 import axios from "axios";
 import React, {
   createContext,
@@ -6,18 +7,24 @@ import React, {
   useMemo,
   useEffect,
 } from "react";
+import { useNavigate } from "react-router-dom";
+// Providers
 import { useData } from "./DataContext";
 import { useUIModal } from "./UIModalContext";
-import { useNavigate } from "react-router-dom";
+// Imports
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // States
-  const [currentUser, setCurrentUser] = useState(null);
+  // Navigate
+  const navigate = useNavigate();
+
+  // Context
   const { flaskAPI } = useData();
   const { showToast, handleCloseModal } = useUIModal();
-  const navigate = useNavigate();
+
+  // States
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Fetching for logged in user
   useEffect(() => {
@@ -37,19 +44,38 @@ export const AuthProvider = ({ children }) => {
   // Handlers
   // Register
   const register = async (userData) => {
-    const email = userData.email;
-    const password = userData.password;
-    const fullName = userData.fullName;
-    const phone = userData.phone;
-    const address = userData.address;
-    const response = await axios.post(flaskAPI + "/register", {
-      email,
-      password,
-      fullName,
-      phone,
-      address,
-    });
-    return response;
+    try {
+      const { email, password, fullName, phone, address } = userData;
+
+      // Form Data
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("fullName", fullName);
+      formData.append("phone", phone);
+      formData.append("address", address);
+
+      // Default image file
+      const fileContent = await fetch(
+        "../../public/assets/placeholder_profile.jpeg"
+      ).then((response) => response.blob());
+      const file = new File([fileContent], "placeholder_profile.jpeg", {
+        type: "image/png",
+      });
+
+      formData.append("image", file);
+
+      const response = await axios.post(`${flaskAPI}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return response;
+    } catch (error) {
+      console.error("Error registering user:", error);
+      throw error;
+    }
   };
 
   // Login
@@ -70,6 +96,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update and Fetch Current User
+  const updateUser = async (formData) => {
+    const response = await axios.post(
+      flaskAPI + "/useredit/" + currentUser._id,
+      formData
+    );
+    if (response.status == 200) {
+      const user = response.data.user;
+      setCurrentUser(user);
+      localStorage.removeItem("currentUser");
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      showToast("success", "User updated successfully!");
+    } else {
+      showToast("error", "Error updating user");
+    }
+  };
+
   // Logout
   const logout = () => {
     navigate("/");
@@ -82,6 +125,7 @@ export const AuthProvider = ({ children }) => {
   const authContextValue = useMemo(
     () => ({
       currentUser,
+      updateUser,
       setCurrentUser,
       register,
       login,

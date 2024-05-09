@@ -15,14 +15,6 @@ const RoomsList = ({ showHotelsList, handleShowHide }) => {
       transition={{ duration: 0.1 }}
       className="col-span-6 px-4 pb-4 bg-mycolor md:h-screen overflow-y-auto h-full"
     >
-      <button
-        onClick={handleShowHide}
-        className={`md:hidden ${
-          showHotelsList && "hidden"
-        } text-gray-600 my-2 text-2xl focus:outline-none`}
-      >
-        {showHotelsList ? "" : <i className="fa-solid fa-angles-left"></i>}
-      </button>
       {/* Hotel Info */}
       {selectedHotelData ? <HotelInfo /> : <></>}
 

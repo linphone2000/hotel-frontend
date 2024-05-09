@@ -2,3 +2,19 @@
     width: 20rem;
     height: 14rem;
 }
+
+.relative:hover .tooltip {
+    display: block;
+}
+
+.tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgb(75 85 99 / var(--tw-bg-opacity));
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import { DataProvider } from "./context/DataContext";
 import { UIModalProvider } from "./context/UIModalContext";
+import { BookingProvider } from "./context/BookingContext";
 // Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -15,7 +16,6 @@ import HotelsPage from "./pages/HotelsPage";
 import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
-import { BookingProvider } from "./context/BookingContext";
 
 function App() {
   return (

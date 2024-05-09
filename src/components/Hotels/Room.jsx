@@ -18,7 +18,7 @@ const Room = ({ room }) => {
       setSelectedRoom(roomID);
       handleOpenModal();
     } else {
-      showToast("error", "Please Log In");
+      showToast("error", "လော့အင်၀င်ပါ");
     }
   };
 
