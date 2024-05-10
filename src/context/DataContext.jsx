@@ -31,11 +31,12 @@ export const DataProvider = ({ children }) => {
     const fetchHotels = async () => {
       try {
         const response = await axios.get(flaskAPI + "/hotels");
-        setHotels(response.data);
+        if (response.status == 200) {
+          setHotels(response.data);
+          setHotelsLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching room:", error);
-      } finally {
-        setHotelsLoading(false);
       }
     };
     if (hotelsLoading == true) {
@@ -51,13 +52,13 @@ export const DataProvider = ({ children }) => {
         const response = await axios.get(flaskAPI + "/rooms/" + hotelID);
         if (response.status != 200) {
           setSelectedRooms([]);
+          setLoading(false);
         } else {
           setSelectedRooms(response.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching rooms:", error);
-      } finally {
-        setLoading(false);
       }
     };
     if (selectedHotel) {
@@ -75,11 +76,9 @@ export const DataProvider = ({ children }) => {
         );
         if (response.status == 200) {
           setSelectedRoomData(response.data);
+          setRoomLoading(false);
         }
-      } catch (error) {
-      } finally {
-        setRoomLoading(false);
-      }
+      } catch (error) {}
     };
     if (selectedRoom != null) {
       fetchRoomByRoomId(selectedRoom);
@@ -94,11 +93,10 @@ export const DataProvider = ({ children }) => {
         const response = await axios.get(flaskAPI + "/hotels/" + hotelID);
         if (response.status == 200) {
           setSelectedHotelData(response.data);
+          setHotelLoading(false);
         }
       } catch (error) {
         console.error("Error fetching hotel:", error);
-      } finally {
-        setHotelLoading(false);
       }
     };
     if (selectedHotel) {
