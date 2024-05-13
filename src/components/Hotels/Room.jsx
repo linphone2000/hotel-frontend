@@ -3,6 +3,7 @@ import { useData } from "../../context/DataContext";
 import ImageLoading from "../ImageLoading/ImageLoading";
 import { useUIModal } from "../../context/UIModalContext";
 import { useAuth } from "../../context/AuthContext";
+import { _capitalize } from "chart.js/helpers";
 
 const Room = ({ room }) => {
   // Context and state
@@ -18,7 +19,7 @@ const Room = ({ room }) => {
       setSelectedRoom(roomID);
       handleOpenModal();
     } else {
-      showToast("error", "လော့အင်၀င်ပါ");
+      showToast("error", "Please log in book!");
     }
   };
 
@@ -30,11 +31,6 @@ const Room = ({ room }) => {
       setRoomImage(image);
     };
   }, [room]);
-
-  // Capitalize Function
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -63,9 +59,7 @@ const Room = ({ room }) => {
         </div>
       </div>
       <div className="p-4">
-        <h3 className="text-xl font-semibold">
-          {capitalizeFirstLetter(room.roomType)}
-        </h3>
+        <h3 className="text-xl font-semibold">{_capitalize(room.roomType)}</h3>
         <ul className="mt-4">
           <li className="flex items-center text-gray-700">
             <span>Max Occupancy: {room.maxOccupancy}</span>

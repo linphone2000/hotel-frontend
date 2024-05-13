@@ -55,21 +55,7 @@ export const AuthProvider = ({ children }) => {
       formData.append("phone", phone);
       formData.append("address", address);
 
-      // Default image file
-      const fileContent = await fetch(
-        "../../public/assets/placeholder_profile.jpeg"
-      ).then((response) => response.blob());
-      const file = new File([fileContent], "placeholder_profile.jpeg", {
-        type: "image/png",
-      });
-
-      formData.append("image", file);
-
-      const response = await axios.post(`${flaskAPI}/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${flaskAPI}/register`, formData, {});
 
       return response;
     } catch (error) {

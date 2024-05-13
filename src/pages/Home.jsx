@@ -1,5 +1,6 @@
 import Features from "../components/Features/Features";
 import Hero from "../components/Hero/Hero";
+import "./Home.css";
 
 function Home() {
   // Scrolling
@@ -9,10 +10,10 @@ function Home() {
   };
 
   return (
-    <>
+    <div className="home">
       <Hero onClick={scrollToFeatures} />
       <Features />
-    </>
+    </div>
   );
 }
 

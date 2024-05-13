@@ -9,6 +9,7 @@ import Spinner from "../Spinner/Spinner";
 import ImageLoading from "../ImageLoading/ImageLoading";
 import CustomDateRangePicker from "../CustomDatePicker/CustomDateRangePicker";
 import { useUIModal } from "../../context/UIModalContext";
+import { _capitalize } from "chart.js/helpers";
 
 const BookForm = () => {
   // Context
@@ -50,11 +51,6 @@ const BookForm = () => {
       setTotalPrice(nights * selectedRoomData.price);
     }
   }, [selectedRange]);
-
-  // Capitalize Function
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
 
   // Handler date range selection
   const handleSelect = (range) => {
@@ -121,7 +117,7 @@ const BookForm = () => {
               <h2 className="text-2xl font-semibold">
                 Room Type:{" "}
                 {selectedRoomData.roomType &&
-                  capitalizeFirstLetter(selectedRoomData.roomType)}
+                  _capitalize(selectedRoomData.roomType)}
               </h2>
               <p className="text-gray-600">
                 Room Number:{" "}

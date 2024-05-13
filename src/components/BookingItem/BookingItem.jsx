@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useData } from "../../context/DataContext";
 import { useUIModal } from "../../context/UIModalContext";
+import { _capitalize } from "chart.js/helpers";
 
 const BookingItem = ({ booking }) => {
   // Context
@@ -31,11 +32,6 @@ const BookingItem = ({ booking }) => {
     console.log(response.data);
     showToast("success", "Booking cancelled!");
     setBookingStatus((prev) => !prev);
-  };
-
-  // Capitalize Function
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (
@@ -85,7 +81,7 @@ const BookingItem = ({ booking }) => {
             Room No: <span className="font-semibold">{booking.roomNumber}</span>
           </p>
           <p className="text-gray-600 font-medium">
-            {capitalizeFirstLetter(booking.roomType)}
+            {_capitalize(booking.roomType)}
           </p>
         </div>
       </div>
