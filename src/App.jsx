@@ -16,6 +16,7 @@ import HotelsPage from "./pages/HotelsPage";
 import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
+import Favourites from "./pages/Favourites";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/hotels" element={<HotelsPage />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/bookings" element={<Bookings />} />
+                <Route path="/favourites" element={<Favourites />} />
               </Routes>
               <Footer />
             </BookingProvider>

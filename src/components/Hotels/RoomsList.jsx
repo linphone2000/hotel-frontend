@@ -99,16 +99,16 @@ const RoomsList = ({ showHotelsList, handleShowHide }) => {
             )}
           </div>
         </motion.div>
-      ) : selectedHotelData && selectedRooms.length == 0 ? (
-        <div className="flex flex-col items-center justify-center h-full gap-4">
+      ) : selectedHotelData == undefined && selectedRooms.length == 0 ? (
+        <div className="flex flex-col items-center justify-center bg-slate-200 rounded-lg pt-6 mt-2 h-full gap-4">
           <i className="fa-solid fa-circle-exclamation text-gray-500 text-5xl"></i>
-          <p className="text-gray-500 text-lg">No rooms in this hotels yet.</p>
+          <p className="text-gray-500 text-lg">Please select a hotel to get started.</p>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full gap-4">
           <i className="fa-solid fa-circle-exclamation text-gray-500 text-5xl"></i>
           <p className="text-gray-500 text-lg">
-            Please select a hotel to get started.
+            No rooms in this hotels yet.
           </p>
         </div>
       )}

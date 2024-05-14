@@ -29,8 +29,11 @@ export const AuthProvider = ({ children }) => {
   // Fetching for logged in user
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
+    if (storedUser !== undefined) {
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser) {
+        fetchUserWithID(parsedUser._id);
+      }
     }
   }, []);
 
@@ -38,6 +41,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (currentUser) {
       handleCloseModal();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser);
     }
   }, [currentUser]);
 
@@ -99,6 +108,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Re-fetch user manually
+  const fetchUser = async () => {
+    const response = await axios.post(
+      flaskAPI + "/fetch_user/" + currentUser._id
+    );
+    if (response.status == 200) {
+      const user = response.data.user;
+      setCurrentUser(user);
+      localStorage.removeItem("currentUser");
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      console.log("User fetched");
+    } else {
+      console.log("User fetching error");
+    }
+  };
+
+  // Re-fetch user manually
+  const fetchUserWithID = async (userID) => {
+    const response = await axios.post(flaskAPI + "/fetch_user/" + userID);
+    if (response.status == 200) {
+      const user = response.data.user;
+      setCurrentUser(user);
+      localStorage.removeItem("currentUser");
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      console.log("User fetched");
+    } else {
+      console.log("User fetching error");
+    }
+  };
+
   // Logout
   const logout = () => {
     navigate("/");
@@ -112,6 +151,7 @@ export const AuthProvider = ({ children }) => {
     () => ({
       currentUser,
       updateUser,
+      fetchUser,
       setCurrentUser,
       register,
       login,

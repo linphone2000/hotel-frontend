@@ -25,6 +25,7 @@ export const DataProvider = ({ children }) => {
   const [hotelLoading, setHotelLoading] = useState(true); // Used for single hotel loading
   const [roomLoading, setRoomLoading] = useState(true);
   const [bookingStatus, setBookingStatus] = useState(false); // To re-render the booking modal
+  const [favHotels, setFavHotels] = useState([]);
 
   // Fetch hotels on load
   useEffect(() => {
@@ -102,7 +103,7 @@ export const DataProvider = ({ children }) => {
     if (selectedHotel) {
       fetchHotelDataBySelection(selectedHotel);
     }
-  }, [selectedHotel]);
+  }, [selectedHotel]);  
 
   // Testing
 
@@ -116,6 +117,9 @@ export const DataProvider = ({ children }) => {
       selectedRooms,
       selectedRoomData,
       setSelectedHotel,
+      favHotels,
+      setFavHotels,
+      setSelectedHotelData,
       setSelectedRoom,
       setSelectedRooms,
       loading,
@@ -133,6 +137,7 @@ export const DataProvider = ({ children }) => {
       selectedHotelData,
       selectedRoom,
       selectedRooms,
+      favHotels,
       loading,
       hotelsLoading,
       hotelLoading,

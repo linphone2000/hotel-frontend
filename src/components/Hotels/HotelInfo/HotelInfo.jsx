@@ -5,6 +5,9 @@ import "./HotelInfo.css";
 import Spinner from "../../Spinner/Spinner";
 import ImageLoading from "../../ImageLoading/ImageLoading";
 import Stars from "./StarComponent/Stars";
+import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
+import { useUIModal } from "../../../context/UIModalContext";
 
 const HotelInfo = () => {
   // Amenities with icons
@@ -23,6 +26,8 @@ const HotelInfo = () => {
 
   // Context
   const { selectedHotelData, flaskAPI, hotelLoading } = useData();
+  const { currentUser, fetchUser } = useAuth();
+  const { showToast } = useUIModal();
 
   // State
   const [hotelImage, setHotelImage] = useState(null);
@@ -41,8 +46,42 @@ const HotelInfo = () => {
     };
   }, [selectedHotelData]);
 
-  // Handler
-  // console.log(typeof selectedHotelData.rating);
+  // Handle fav insert
+  const handleFav = async () => {
+    if (currentUser) {
+      const response = await axios.post(
+        flaskAPI + "/fav_hotel/" + selectedHotelData._id,
+        { userID: currentUser._id }
+      );
+      if (response.status == 200) {
+        showToast("success", "Hotel added to favourites.");
+        fetchUser();
+      }
+    } else {
+      showToast("error", "Please log in to add favourite.");
+    }
+  };
+
+  // Handle fav remove
+  const handleFavRemove = async () => {
+    if (currentUser) {
+      const response = await axios.post(
+        flaskAPI + "/fav_hotel_remove/" + selectedHotelData._id,
+        { userID: currentUser._id }
+      );
+      if (response.status == 200) {
+        showToast("success", "Hotel removed from favourites.");
+        fetchUser();
+      }
+    } else {
+      showToast("error", "Please log in to add favourite.");
+    }
+  };
+
+  const isContained =
+    currentUser &&
+    currentUser.favIDs &&
+    currentUser.favIDs.includes(selectedHotelData._id);
 
   return (
     <>
@@ -62,11 +101,30 @@ const HotelInfo = () => {
                 <ImageLoading />
               </div>
             ) : (
-              <img
-                className="my-2 mx-auto md:mx-0 object-cover rounded-md hotel-info-image"
-                src={`${hotelImage.src}`}
-                alt="Hotel Image"
-              />
+              <div className="relative">
+                <img
+                  className="my-2 mx-auto md:mx-0 object-cover rounded-md hotel-info-image"
+                  src={`${hotelImage.src}`}
+                  alt="Hotel Image"
+                />
+                {isContained ? (
+                  // Contained
+                  <button
+                    className="absolute top-1 right-8 md:right-3 text-rose-500 hover:text-rose-300 transition"
+                    onClick={handleFavRemove}
+                  >
+                    <i className="fa-solid text-2xl fa-heart"></i>
+                  </button>
+                ) : (
+                  // Not contained
+                  <button
+                    className="absolute top-1 right-8 md:right-3 text-white hover:text-rose-500 transition"
+                    onClick={handleFav}
+                  >
+                    <i className="fa-regular text-2xl fa-heart"></i>
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
@@ -75,10 +133,12 @@ const HotelInfo = () => {
             <>
               <div className="flex flex-col text-center md:justify-between py-2 md:text-left md:w-1/2">
                 <div>
-                  <h1 className="text-lg md:text-xl mb-2 font-bold">
-                    {selectedHotelData.name}
-                  </h1>
-                  <div className="flex justify-start md:items-center space-x-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h1 className="text-lg md:text-xl font-bold">
+                      {selectedHotelData.name}
+                    </h1>
+                  </div>
+                  <div className="flex justify-center md:justify-start md:items-center space-x-1">
                     <Stars rating={selectedHotelData.rating} />
                     <p className="font-medium">{selectedHotelData.rating}</p>
                   </div>{" "}

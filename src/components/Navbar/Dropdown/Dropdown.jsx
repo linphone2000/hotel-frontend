@@ -55,8 +55,8 @@ const Dropdown = ({ isOpen, handleNavigation }) => {
 
             {/* User Favourite */}
             {currentUser && (
-              <NavItem handleNavigation={handleNavigation} route={"/favorites"}>
-                My Favorites
+              <NavItem handleNavigation={handleNavigation} route={"/favourites"}>
+                My Favourites
               </NavItem>
             )}
 
