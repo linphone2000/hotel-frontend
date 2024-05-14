@@ -11,7 +11,7 @@ const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   // const flaskAPI = "http://localhost:5001";
-  const flaskAPI = "https://hotel-backend-flask-a669f23c07e6.herokuapp.com";
+  const flaskAPI = "https://following-blackbird-lpmz-a2088328.koyeb.app";
 
   // States
   const [hotels, setHotels] = useState([]); // All hotels

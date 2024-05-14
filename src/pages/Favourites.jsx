@@ -41,7 +41,7 @@ const Favourites = () => {
   // Test
   useEffect(() => {
     if (favHotels) {
-      console.log(favHotels);
+      // console.log(favHotels);
     }
   }, [favHotels]);
 
@@ -52,14 +52,14 @@ const Favourites = () => {
   return (
     <>
       {currentUser && (
-        <div className="min-h-screen">
+        <div className="bg-white py-4 min-h-screen">
           {currentUser.favIDs && currentUser.favIDs.length > 0 ? (
             <>
-              <h1 className="text-center mt-4 mb-2 font-bold text-2xl">
+              <h1 className="text-center mb-2 font-bold text-2xl">
                 Your favourite hotels
               </h1>
               <hr className="border-gray-300"></hr>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 justify-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 justify-center">
                 {favHotels.map((hotel) => (
                   <HotelCard key={hotel._id} hotel={hotel} />
                 ))}

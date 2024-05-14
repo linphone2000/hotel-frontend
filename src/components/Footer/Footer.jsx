@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <footer className="text-white" id="footer-section">
       <div className="container mx-auto px-4 py-8 flex flex-wrap md:justify-between justify-center">
@@ -25,16 +27,16 @@ const Footer = () => {
           <h3 className="text-lg font-semibold">Navigation</h3>
           <ul className="text-base list-none">
             <li>
-              <a href="#">Home</a>
+              <a onClick={() => navigate("/")}>Home</a>
             </li>
             <li>
-              <a href="#">About Us</a>
+              <a onClick={() => navigate("/about")}>About Us</a>
             </li>
             <li>
-              <a href="#">Services</a>
+              <a onClick={() => navigate("/hotels")}>Services</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a onClick={() => navigate("/about")}>Contact</a>
             </li>
           </ul>
         </div>

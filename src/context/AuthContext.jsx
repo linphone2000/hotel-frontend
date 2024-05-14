@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser);
+      // console.log(currentUser);
     }
   }, [currentUser]);
 
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       localStorage.removeItem("currentUser");
       localStorage.setItem("currentUser", JSON.stringify(user));
-      console.log("User fetched");
+      // console.log("User fetched");
     } else {
       console.log("User fetching error");
     }

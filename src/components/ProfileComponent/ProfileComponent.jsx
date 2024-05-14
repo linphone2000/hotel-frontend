@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { useData } from "../../context/DataContext";
 import { useAuth } from "../../context/AuthContext";
 import { useUIModal } from "../../context/UIModalContext";
 import ImageLoading from "../ImageLoading/ImageLoading";
+import BookingComponent from "../BookingComponent/BookingComponent";
+import Favourites from "../../pages/Favourites";
 
 const ProfileComponent = () => {
   // Context
@@ -98,57 +99,60 @@ const ProfileComponent = () => {
   return (
     <>
       {currentUser ? (
-        <div className="text-center p-8">
-          {/* Profile Picture */}
-          {profileImage == null ? (
-            <div className="flex justify-center">
-              <ImageLoading scale={"!rounded-full h-28 w-28"} />
-            </div>
-          ) : (
-            <div className="relative mx-auto overflow-hidden rounded-full h-28 w-28 mb-4">
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleImageChange}
-                className="opacity-0 w-0"
-                disabled={!isFormEnabled}
-              ></input>
-              {image ? (
-                <img
-                  className="object-cover inline-block w-full h-full"
-                  src={URL.createObjectURL(image)}
-                  alt="Hotel Image"
-                />
+        // Main wrapper
+        <div className="p-4 gap-4 flex">
+          {/* Left */}
+          <div className="p-4 w-full lg:w-1/4 bg-white rounded-lg shadow-md">
+            <div className="text-center mb-4">
+              {/* Profile Picture */}
+              {profileImage == null ? (
+                <div className="flex justify-center">
+                  <ImageLoading scale={"!rounded-full h-24 w-24"} />
+                </div>
               ) : (
-                <img
-                  className="object-cover inline-block w-full h-full"
-                  src={`${profileImage.src}`}
-                  alt="Hotel Image"
-                />
+                <div className="relative mx-auto overflow-hidden rounded-full h-24 w-24 mb-2">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    className="opacity-0 w-0"
+                    disabled={!isFormEnabled}
+                  />
+                  {image ? (
+                    <img
+                      className="object-cover inline w-full h-full"
+                      src={URL.createObjectURL(image)}
+                      alt="Profile Image"
+                    />
+                  ) : (
+                    <img
+                      className="object-cover inline w-full h-full"
+                      src={`${profileImage.src}`}
+                      alt="Profile Image"
+                    />
+                  )}
+                  {/* Overlay */}
+                  <div
+                    onClick={handleFileUpload}
+                    className={`absolute bottom-0 left-0 w-full h-1/2 bg-black bg-opacity-50 text-white text-center opacity-0 transition-opacity duration-300 ${
+                      isFormEnabled && "hover:opacity-100 hover:cursor-pointer"
+                    }`}
+                  >
+                    <p className="p-1 text-sm">Edit</p>
+                  </div>
+                </div>
               )}
-              {/* Overlay */}
-              <div
-                onClick={handleFileUpload}
-                className={`absolute bottom-0 left-0 w-full h-1/2 bg-black bg-opacity-50 text-white text-center opacity-0 transition-opacity duration-300 ${
-                  isFormEnabled && "hover:opacity-100 hover:cursor-pointer"
-                }`}
-              >
-                <p className="p-2">Edit</p>
-              </div>
+
+              {/* Profile Heading */}
+              <h1 className="text-2xl font-bold mb-2">
+                {currentUser.fullName}
+              </h1>
             </div>
-          )}
 
-          {/* Profile Heading */}
-          <h1 className="text-5xl font-bold mb-4">{currentUser.fullName}</h1>
-
-          {/* Profile Edit */}
-          <div className="flex justify-center">
-            <div className="bg-gray-50 w-full md:w-1/2 rounded-md p-4 flex flex-col transition-all">
-              <div className="flex flex-col md:flex-row items-center justify-evenly mb-2">
-                <label
-                  htmlFor="fullName"
-                  className="md:w-1/3 block mb-2 text-lg"
-                >
+            {/* Profile Edit Form */}
+            <div className="bg-gray-50 p-4 rounded-lg shadow-inner">
+              <div className="mb-3">
+                <label htmlFor="fullName" className="block text-sm mb-1">
                   Full Name:
                 </label>
                 <input
@@ -160,17 +164,17 @@ const ProfileComponent = () => {
                       fullName: e.target.value,
                     }))
                   }
-                  className={`p-2 rounded-md w-full md:w-2/3 mb-2 ${
+                  className={`w-full p-2 rounded-md ${
                     isFormEnabled
-                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700 focus:outline-2 animate-pulse"
+                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700"
                       : "bg-gray-100 cursor-not-allowed"
                   }`}
                   value={formData.fullName}
                   disabled={!isFormEnabled}
                 />
               </div>
-              <div className="flex flex-col md:flex-row items-center justify-evenly mb-2">
-                <label htmlFor="email" className="md:w-1/3 block mb-2 text-lg">
+              <div className="mb-3">
+                <label htmlFor="email" className="block text-sm mb-1">
                   Email:
                 </label>
                 <input
@@ -179,17 +183,17 @@ const ProfileComponent = () => {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))
                   }
-                  className={`p-2 rounded-md w-full md:w-2/3 mb-2 ${
+                  className={`w-full p-2 rounded-md ${
                     isFormEnabled
-                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700 focus:outline-2 animate-pulse"
+                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700"
                       : "bg-gray-100 cursor-not-allowed"
                   }`}
                   value={formData.email}
                   disabled={!isFormEnabled}
                 />
               </div>
-              <div className="flex flex-col md:flex-row items-center justify-evenly mb-2">
-                <label htmlFor="phone" className="md:w-1/3 block mb-2 text-lg">
+              <div className="mb-3">
+                <label htmlFor="phone" className="block text-sm mb-1">
                   Phone:
                 </label>
                 <input
@@ -198,20 +202,17 @@ const ProfileComponent = () => {
                     setFormData((prev) => ({ ...prev, phone: e.target.value }))
                   }
                   type="text"
-                  className={`p-2 rounded-md w-full md:w-2/3 mb-2 ${
+                  className={`w-full p-2 rounded-md ${
                     isFormEnabled
-                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700 focus:outline-2 animate-pulse"
+                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700"
                       : "bg-gray-100 cursor-not-allowed"
                   }`}
                   value={formData.phone}
                   disabled={!isFormEnabled}
                 />
               </div>
-              <div className="flex flex-col md:flex-row items-center justify-evenly mb-2">
-                <label
-                  htmlFor="address"
-                  className="md:w-1/3 block mb-2 text-lg"
-                >
+              <div className="mb-3">
+                <label htmlFor="address" className="block text-sm mb-1">
                   Address:
                 </label>
                 <input
@@ -223,9 +224,9 @@ const ProfileComponent = () => {
                     }))
                   }
                   type="text"
-                  className={`p-2 rounded-md w-full md:w-2/3 mb-2 ${
+                  className={`w-full p-2 rounded-md ${
                     isFormEnabled
-                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700 focus:outline-2 animate-pulse"
+                      ? "bg-gray-200 outline outline-1 outline-blue-300 focus:outline-blue-700"
                       : "bg-gray-100 cursor-not-allowed"
                   }`}
                   value={formData.address}
@@ -233,30 +234,39 @@ const ProfileComponent = () => {
                 />
               </div>
 
-              {/* Button */}
+              {/* Save Changes Button */}
               {isFormEnabled && (
                 <div className="flex justify-center">
                   <button
                     onClick={handleSubmit}
-                    className={`mt-4 px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition`}
+                    className="mt-2 px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition"
                   >
                     Save Changes
                   </button>
                 </div>
               )}
             </div>
+
+            {/* Edit/Cancel Button */}
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={toggleFormEnabled}
+                className={`px-4 py-2 rounded-md transition ${
+                  isFormEnabled
+                    ? "bg-gray-500 text-white hover:bg-gray-600"
+                    : "bg-blue-500 text-white hover:bg-blue-600"
+                }`}
+              >
+                {isFormEnabled ? "Cancel Editing" : "Edit Profile"}
+              </button>
+            </div>
           </div>
 
-          <button
-            onClick={toggleFormEnabled}
-            className={`mt-4 px-4 py-2 rounded-md transition ${
-              isFormEnabled
-                ? "bg-gray-500 text-gray-100 hover:bg-gray-600"
-                : "bg-blue-500 text-white hover:bg-blue-600"
-            }`}
-          >
-            {isFormEnabled ? "Cancel Editing" : "Edit Profile"}
-          </button>
+          {/* Right */}
+          <div className="hidden rounded-md overflow-hidden lg:block w-3/4">
+            {/* <BookingComponent /> */}
+            <Favourites />
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

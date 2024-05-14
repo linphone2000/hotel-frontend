@@ -23,34 +23,50 @@ export const BookingProvider = ({ children }) => {
   const [bookingsLoading, setBookingLoading] = useState(true);
 
   // Fetch bookings by user id
-  useEffect(() => {
-    const getBookingsByID = async () => {
-      try {
-        const response = await axios.get(
-          flaskAPI + "/bookings/" + currentUser._id
-        );
-        if (response.status == 200) {
-          setBookings(response.data);
-        } else {
-          setBookings([]);
-        }
-      } catch (error) {
-        showToast("error", "Error fetching bookings");
-      } finally {
-        setBookingLoading(false);
+  // useEffect(() => {
+  //   const getBookingsByID = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         flaskAPI + "/bookings/" + currentUser._id
+  //       );
+  //       if (response.status == 200) {
+  //         setBookings(response.data);
+  //       } else {
+  //         setBookings([]);
+  //       }
+  //     } catch (error) {
+  //       showToast("error", "Error fetching bookings");
+  //     } finally {
+  //       setBookingLoading(false);
+  //     }
+  //   };
+  //   if (currentUser) {
+  //     getBookingsByID();
+  //   }
+  // }, [currentUser, bookingStatus]);
+
+  // Fetch bookings manually
+  const getBookingsByID = async (userID) => {
+    try {
+      const response = await axios.get(flaskAPI + "/bookings/" + userID);
+      if (response.status == 200) {
+        setBookings(response.data);
+      } else {
+        setBookings([]);
       }
-    };
-    if (currentUser) {
-      getBookingsByID();
+    } catch (error) {
+      showToast("error", "Error fetching bookings");
+    } finally {
+      setBookingLoading(false);
     }
-  }, [currentUser, bookingStatus]);
+  };
 
   // Handlers
   // console.log(bookings);
 
   // Memo
   const BookingContextValue = useMemo(
-    () => ({ bookings, bookingsLoading }),
+    () => ({ bookings, bookingsLoading, getBookingsByID }),
     [bookings, bookingsLoading]
   );
 

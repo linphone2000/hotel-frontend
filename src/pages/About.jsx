@@ -4,9 +4,9 @@ const About = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.5 }} 
-      className="p-10 text-xl"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-10 text-xl h-screen"
     >
       <p className="p-10 text-xl">
         Cozy Boutique Hotel: Experience the charm and intimacy of [Hotel Name],
