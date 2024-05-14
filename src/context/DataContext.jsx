@@ -10,8 +10,8 @@ import axios from "axios";
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const flaskAPI = "http://localhost:5001";
-  // const flaskAPI = "http://192.168.10.3:5001";
+  // const flaskAPI = "http://localhost:5001";
+  const flaskAPI = "https://hotel-backend-flask-a669f23c07e6.herokuapp.com";
 
   // States
   const [hotels, setHotels] = useState([]); // All hotels
