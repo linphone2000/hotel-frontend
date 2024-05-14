@@ -101,6 +101,7 @@ function AuthForm() {
           setLogging(false);
         } else {
           showToast("error", response.data.message);
+          setLogging(false);
         }
       }
     } catch (error) {
@@ -154,7 +155,7 @@ function AuthForm() {
             ))}
 
             {/* Submit */}
-            <div className="button-container">
+            <div className="button-container relative">
               <motion.button
                 variants={textVariants}
                 animate={isAnimated ? "animate" : "initial"}
@@ -163,6 +164,11 @@ function AuthForm() {
               >
                 {mode === "login" ? "Login" : "Register"}
               </motion.button>
+              {logging && (
+                <div className="absolute left-3/4 transform -translate-x-3/4">
+                  <Spinner />
+                </div>
+              )}
             </div>
           </motion.form>
 
@@ -178,11 +184,6 @@ function AuthForm() {
               {mode === "login" ? "Register here" : "Login here"}
             </button>
           </motion.p>
-          {logging && (
-            <div className="absolute left-2/4 transform -translate-x-2/4 -bottom-6">
-              <Spinner />
-            </div>
-          )}
         </div>
       </div>
     </>

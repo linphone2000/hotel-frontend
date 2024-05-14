@@ -66,7 +66,7 @@ const Favourites = () => {
               </div>
             </>
           ) : (
-            <div className=" bg-gray-100 p-10">
+            <div className=" bg-white p-10">
               <div className="flex items-center h-screen justify-center text-center w-full text-gray-600 p-4border border-gray-300 rounded-lg shadow-md">
                 <h1 className="font-semibold text-2xl">No favourite hotels</h1>
               </div>
