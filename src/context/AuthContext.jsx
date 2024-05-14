@@ -75,11 +75,11 @@ export const AuthProvider = ({ children }) => {
 
   // Login
   const login = async (email, password) => {
+    showToast("info", "Logging in...");
     const response = await axios.post(flaskAPI + "/login", {
       email,
       password,
     });
-    showToast('info',"Logging in...")
     if (response.data.user) {
       const user = response.data.user;
       setCurrentUser(user);
