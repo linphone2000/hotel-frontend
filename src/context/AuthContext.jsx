@@ -75,7 +75,6 @@ export const AuthProvider = ({ children }) => {
 
   // Login
   const login = async (email, password) => {
-    showToast("info", "Logging in...");
     const response = await axios.post(flaskAPI + "/login", {
       email,
       password,
@@ -85,6 +84,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       localStorage.setItem("currentUser", JSON.stringify(user));
       showToast("success", response.data.message);
+      return response;
     } else if (response.status == 204) {
       showToast("error", "User doesn't exists");
     } else {

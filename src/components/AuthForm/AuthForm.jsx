@@ -4,12 +4,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import { useUIModal } from "../../context/UIModalContext";
 import { useAuth } from "../../context/AuthContext";
+import Spinner from "../Spinner/Spinner";
 
 function AuthForm() {
   // States
   const [mode, setMode] = useState("login");
   const [isAnimated, setIsAnimated] = useState(false);
   const [isRegisteredMode, setIsRegisteredMode] = useState(false);
+  const [logging, setLogging] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   // Refs
   const emailRef = useRef(null);
@@ -70,6 +73,7 @@ function AuthForm() {
   // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLogging(true);
     const userData = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -82,7 +86,10 @@ function AuthForm() {
     try {
       // Login
       if (mode === "login") {
-        login(userData.email, userData.password);
+        const response = await login(userData.email, userData.password);
+        if (response.data.user) {
+          setLogging(false);
+        }
       } else {
         // Register
         const response = await register(userData);
@@ -91,6 +98,7 @@ function AuthForm() {
           showToast("success", response.data.message);
           setIsRegisteredMode((prev) => !prev);
           setMode("login");
+          setLogging(false);
         } else {
           showToast("error", response.data.message);
         }
@@ -117,7 +125,7 @@ function AuthForm() {
         </div>
 
         {/* Right Pane */}
-        <div className="auth-form-container">
+        <div className="auth-form-container relative">
           <motion.h2
             variants={textVariants}
             animate={isAnimated ? "animate" : "initial"}
@@ -169,6 +177,11 @@ function AuthForm() {
               {mode === "login" ? "Register here" : "Login here"}
             </button>
           </motion.p>
+          {logging && (
+            <div className="absolute left-2/4 transform -translate-x-2/4 -bottom-6">
+              <Spinner />
+            </div>
+          )}
         </div>
       </div>
     </>
