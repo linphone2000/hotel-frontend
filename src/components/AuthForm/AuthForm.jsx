@@ -55,10 +55,10 @@ function AuthForm() {
   };
 
   // Effect
-  useEffect(() => {
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-  }, []);
+  // useEffect(() => {
+  //   emailRef.current.value = "";
+  //   passwordRef.current.value = "";
+  // }, []);
 
   // Handlers
   const handleModeChange = () => {
@@ -135,6 +135,7 @@ function AuthForm() {
 
           {/* Form */}
           <motion.form
+            key={mode}
             variants={textVariants}
             animate={isAnimated ? "animate" : "initial"}
             onSubmit={handleSubmit}
