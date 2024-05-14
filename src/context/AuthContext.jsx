@@ -87,8 +87,10 @@ export const AuthProvider = ({ children }) => {
       return response;
     } else if (response.status == 204) {
       showToast("error", "User doesn't exists");
+      return response;
     } else {
       showToast("error", response.data.message);
+      return response;
     }
   };
 

@@ -87,7 +87,8 @@ function AuthForm() {
       // Login
       if (mode === "login") {
         const response = await login(userData.email, userData.password);
-        if (response.data.user) {
+        if (response) {
+          console.log(response);
           setLogging(false);
         }
       } else {
