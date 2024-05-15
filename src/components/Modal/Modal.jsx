@@ -18,7 +18,9 @@ const Modal = ({ children }) => {
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className={`modal-box ${modalForm == "book" && "book"} ${isModalOpen ? "active" : ""}`}
+        className={`modal-box ${modalForm == "book" && "lg:w-3/4"} ${
+          isModalOpen ? "active" : ""
+        }`}
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: isModalOpen ? 1 : 0, y: isModalOpen ? 0 : -50 }}
         transition={{ duration: 0.3 }}

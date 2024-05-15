@@ -2,12 +2,16 @@ import axios from "axios";
 import { useData } from "../../context/DataContext";
 import { useUIModal } from "../../context/UIModalContext";
 import { _capitalize } from "chart.js/helpers";
+import { useAuth } from "../../context/AuthContext";
+import { useBooking } from "../../context/BookingContext";
 
 const BookingItem = ({ booking }) => {
   // Context
   const { flaskAPI } = useData();
   const { setBookingStatus } = useData();
   const { showToast } = useUIModal();
+  const { currentUser } = useAuth();
+  const { getBookingsByID } = useBooking();
 
   // Date Formatting
   const formatDate = (dateString) => {
@@ -32,6 +36,7 @@ const BookingItem = ({ booking }) => {
     console.log(response.data);
     showToast("success", "Booking cancelled!");
     setBookingStatus((prev) => !prev);
+    getBookingsByID(currentUser._id);
   };
 
   return (

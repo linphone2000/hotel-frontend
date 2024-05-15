@@ -51,12 +51,12 @@ const HotelCard = ({ hotel }) => {
           <span className="font-bold">Phone:</span> {hotel.hotelPhone}
         </p>
       </div>
-      <div className="w-1/2">
+      <div className="w-1/2 flex items-center">
         {hotelImage == null ? (
-          <ImageLoading scale={"w-full h-full"} isCenter={true} />
+          <ImageLoading scale={"w-full"} isCenter={true} />
         ) : (
           <img
-            className={`h-full w-full object-cover mx-auto rounded-md `}
+            className={`w-full object-cover mx-auto rounded-md `}
             src={`${hotelImage.src}`}
             alt="Hotel Image"
           />

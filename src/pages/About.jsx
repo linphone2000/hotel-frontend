@@ -8,14 +8,18 @@ const About = () => {
       transition={{ duration: 0.5 }}
       className="p-10 text-xl h-screen"
     >
-      <p className="p-10 text-xl">
-        Cozy Boutique Hotel: Experience the charm and intimacy of [Hotel Name],
-        your haven in the heart of [city name]. Our boutique hotel boasts a
-        unique character and personalized service. Each of our thoughtfully
-        designed rooms offers a sense of comfort and style. Savor a delicious
-        breakfast in our charming cafe, and explore the vibrant culture and
-        attractions on our doorstep. At [Hotel Name], we believe in creating a
-        warm and welcoming atmosphere where guests feel like cherished friends.
+      <p className="p-10 text-justify text-xl">
+        Explore a world of possibilities with our diverse collection of hotels,
+        each offering its own unique charm and character. From boutique gems
+        nestled in quaint neighborhoods to luxurious skyscrapers with
+        breathtaking city views, we have something to suit every taste and
+        preference. Whether you're seeking a romantic getaway, a family-friendly
+        retreat, or a vibrant urban escape, our curated selection ensures that
+        you'll find the perfect accommodation for your next adventure. With a
+        focus on impeccable service, exceptional amenities, and unparalleled
+        comfort, each of our hotels promises a memorable stay that exceeds your
+        expectations. Discover your ideal home away from home and make your next
+        journey truly extraordinary.
       </p>
     </motion.div>
   );

@@ -16,7 +16,7 @@ const BookingComponent = () => {
     if (currentUser) {
       getBookingsByID(currentUser._id);
     }
-  });
+  }, []);
 
   // Effect to re-render
   useEffect(() => {}, [bookingStatus]);
@@ -25,7 +25,7 @@ const BookingComponent = () => {
     <div className="bg-gray-50 min-h-screen p-4">
       <h2 className="text-2xl text-center font-semibold mb-4">Your Bookings</h2>
       <hr className="my-5 border-gray-300"></hr>
-      {bookingsLoading ? (
+      {!bookings ? (
         <div className="h-64">
           <Spinner />
         </div>

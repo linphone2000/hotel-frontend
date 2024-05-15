@@ -68,7 +68,7 @@ const BookForm = () => {
         currentDate.setDate(currentDate.getDate() + 1);
       }
 
-      if (datesToAdd.length > 0) {
+      if (datesToAdd.length > 1) {
         const response = await axios.post(flaskAPI + "/book", {
           userID: currentUser._id,
           roomID: selectedRoomData._id,
@@ -82,6 +82,8 @@ const BookForm = () => {
           showToast("success", "Room booked successfully");
           handleCloseModal();
         }
+      } else {
+        showToast("error", "Please select both check in/out dates");
       }
     } catch (error) {
       console.log("No dates selected");
@@ -151,13 +153,16 @@ const BookForm = () => {
 
             {/* Display selected date range */}
             {selectedRange && (
-              <>
+              <div className="flex flex-col gap-2">
                 <p className="text-gray-700 mt-4">
                   Selected range: {selectedRange.startDate.toDateString()} -{" "}
                   {selectedRange.endDate.toDateString()}
                 </p>
-                <p>Price: ${totalPrice}</p>
-              </>
+                <div className="flex justify-center gap-4 items-center">
+                  <p className="font-semibold text-gray-600">Price: ${totalPrice}</p>
+                  <p className="text-sm text-green-500 border px-2 pb-0.5 rounded-lg border-green-500">Pay on arrival</p>
+                </div>
+              </div>
             )}
 
             {/* Book Submit */}
