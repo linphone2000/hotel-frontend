@@ -17,6 +17,7 @@ import Footer from "./components/Footer/Footer";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
 import Favourites from "./pages/Favourites";
+import Contact from "./components/Contact/Contact";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/hotels" element={<HotelsPage />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/bookings" element={<Bookings />} />

@@ -48,6 +48,7 @@ export const BookingProvider = ({ children }) => {
   // Fetch bookings manually
   const getBookingsByID = async (userID) => {
     try {
+      setBookingLoading(true);
       const response = await axios.get(flaskAPI + "/bookings/" + userID);
       if (response.status == 200) {
         setBookings(response.data);
@@ -66,7 +67,7 @@ export const BookingProvider = ({ children }) => {
 
   // Memo
   const BookingContextValue = useMemo(
-    () => ({ bookings, bookingsLoading, getBookingsByID }),
+    () => ({ bookings, bookingsLoading, getBookingsByID, setBookings }),
     [bookings, bookingsLoading]
   );
 
